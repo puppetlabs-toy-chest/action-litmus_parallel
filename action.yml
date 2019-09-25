@@ -1,10 +1,19 @@
-name: 'Node 12 Template Action'
-description: 'Get started with Node actions'
-author: 'GitHub'
+name: litmus_parallel
+description: 'Run litmus parallel tests'
+author: Puppet
 inputs:
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+  platform:
+    description: 'The provision list to use from provision.yaml'
+    default: default
+  puppet_gem_version:
+    description: 'The version of the Puppet gem to use for the current test set'
+    default: ~> 6.0
+  bundler_args:
+    description: 'Arguments to pass to bundler'
+    default: --without system_tests
+  agent_family:
+    description: 'Puppet agent family version'
+    default: puppet5
 runs:
-  using: 'node12'
-  main: 'lib/main.js'
+  using: node12
+  main: 'lib/litmus_parallel.js'
