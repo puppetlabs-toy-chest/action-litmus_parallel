@@ -1,9 +1,37 @@
-# JavaScript Action Template
+# Action Litmus-Parallel
 
-This template offers an easy way to get started writing a JavaScript action with TypeScript compile time support, unit testing with Jest and using the GitHub Actions Toolkit.
+This action was designed to allow running acceptance tests for Puppet modules using Litmus. 
+This will allow you to set up a matrix strategy in your Github Actions workflow to run the module's acceptance tests on multiple platforms and Puppet agent versions.
 
 ## Getting Started
 
-See the walkthrough located [here](https://github.com/actions/toolkit/blob/master/docs/javascript-action.md).
+In the following example you can see the jobs setup in a Github Actions workflow that runs the acceptance tests using Litmus for a module using Puppet agent versions 5 and 6 and platform array specified in the provision.yaml of the module, in this example the platforms specified in the release_checks are used. For more information about the provision.yaml and Litmus see the documentation [here](https://github.com/puppetlabs/puppet_litmus/wiki). 
 
-In addition to walking your through how to create an action, it also provides strategies for versioning, releasing and referencing your actions.
+> provisin.yaml
+    ---
+    release_checks:
+      provisioner: docker
+      images: ['litmusimage/ubuntu:14.04', 'litmusimage/ubuntu:16.04', 'litmusimage/ubuntu:18.04']
+
+> .github/workflows/example_workflow.yaml
+    ...
+    jobs:
+      LitmusAcceptance:
+        runs-on: self-hosted
+    
+        strategy:
+          matrix:
+            ruby_version: [2.5.x]
+            puppet_gem_version: [~> 6.0]
+            platform: [release_checks]
+            agent_family: ['puppet5', 'puppet6']
+    
+        steps:
+        - uses: actions/checkout@v1
+    
+        - name: Litmus Parallel
+          uses: puppetlabs/action-litmus_parallel@master
+          with:
+            platform: ${{ matrix.platform }}
+            agent_family: ${{ matrix.agent_family }}
+
