@@ -32,7 +32,7 @@ In the following example you can see the jobs setup in a Github Actions workflow
         - uses: actions/checkout@v1
     
         - name: Litmus Parallel
-          uses: puppetlabs/action-litmus_parallel@master
+          uses: puppetlabs/action-litmus_parallel@main
           with:
             platform: ${{ matrix.platform }}
             agent_family: ${{ matrix.agent_family }}
