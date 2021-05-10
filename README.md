@@ -1,3 +1,7 @@
+# Notice of no maintainership
+
+This action is not further maintained. If you want to run litmus on Github Actions, please check out [the PDK templates](https://github.com/puppetlabs/pdk-templates/tree/main/moduleroot/.github/workflows).
+
 # Action Litmus-Parallel
 
 This action was designed to allow running acceptance tests for Puppet modules using Litmus. 
